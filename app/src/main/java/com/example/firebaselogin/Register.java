@@ -27,6 +27,18 @@ public class Register extends AppCompatActivity {
     FirebaseAuth mAuth;
     ProgressBar progressBar;
     TextView textView;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +56,7 @@ public class Register extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        });
+        }) ;
 
         buttonReg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +84,9 @@ public class Register extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(Register.this, "Account Created.",
                                             Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(),Login.class);
+                                    startActivity(intent);
+                                    finish();
                                     // Sign in success, update UI with the signed-in user's information
 //                                    FirebaseUser user = mAuth.getCurrentUser();
 //                                    updateUI(user);
